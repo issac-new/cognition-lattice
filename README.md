@@ -1,6 +1,6 @@
 # 认知格栅（Cognition Lattice）
 
-静态中文认知知识库，灵感来自查理·芒格的「多元思维模型格栅」：**9 个维度、77 个分类、1975 条条目**，全部正文位于 `references/`。只提供概念定义、机制、应用场景与关联概念，不联网、不修改业务代码。
+静态中文认知知识库，灵感来自查理·芒格的「多元思维模型格栅」：**9 个维度（分属类型/领域/源流三条正交轴）、77 个分类、1985 条条目**，全部正文位于 `references/`。只提供概念定义、机制、应用场景与关联概念，不联网、不修改业务代码。
 
 ## 快速开始
 
@@ -9,6 +9,7 @@
 ```bash
 python3 scripts/lattice.py search 损失厌恶 --limit 10   # 查术语（中英文、别名）
 python3 scripts/lattice.py search 系统 反馈 --full       # 多关键词 AND + 正文检索
+python3 scripts/lattice.py search 五个为什么               # 中文变体经同义词表命中 5Why
 python3 scripts/lattice.py show EW-0015                  # 按脚本 ID 读单条正文
 python3 scripts/lattice.py search 锚定 --file cognitive_biases.md --show  # 限维度直读
 python3 scripts/lattice.py audit                         # 全库审计（条目/分类/数据质量）
@@ -23,8 +24,8 @@ python3 scripts/lattice.py index                         # 重新生成 scripts/
 |------|--------|------|
 | 认知偏差 | 239 | `references/cognitive_biases.md` |
 | 心理效应 | 221 | `references/psychological_effects.md` |
-| 思维模型 | 712 | `references/mental_models.md` |
-| 思维框架 | 235 | `references/thinking_frameworks.md` |
+| 思维模型 | 720 | `references/mental_models.md` |
+| 思维框架 | 237 | `references/thinking_frameworks.md` |
 | 跨学科心智工具 | 64 | `references/interdisciplinary_tools.md` |
 | 东方传统智慧（含三十六计体系） | 109 | `references/eastern_wisdom.md` |
 | 论证谬误 | 135 | `references/argumentation_fallacies.md` |
@@ -32,6 +33,8 @@ python3 scripts/lattice.py index                         # 重新生成 scripts/
 | 成长思维模型 | 125 | `references/growth_thinking.md` |
 
 另附 `references/orchestrator_integration.md`：把知识库映射到任务调度/路由/派工等决策场景的集成示例（含 8 项决策偏差自检清单与执行前守门清单），不是第十个知识维度。
+
+另附 `references/ontology.md`（v3.3 起）：领域本体层——三轴分类学、九维度判定规则与消歧、同名条目归属优先级（canonical home）、关系词汇（去偏对策/对照概念）、证据状态枚举、覆盖审计基线、偏见声明与缺口登记。
 
 ## 作为 Agent Skill 安装
 
@@ -47,12 +50,14 @@ git clone https://github.com/issac-new/cognition-lattice.git ~/.hermes/skills/co
 ## 数据质量（如实声明）
 
 - 全库有 188 组同名条目、228 条冗余（约 11.6%），源于多次批次合并；同一概念在不同维度保留不同视角，一次回答只引用最贴合的一个维度。
-- `mental_models.md` 有 573 条来源为占位文本、322 条释义与机制重复；`thinking_frameworks.md` 有 180 条模板化批次。这些条目保留不删，但引用时优先选手写批次，不把模板句当证据。
+- `mental_models.md` 有 570 条来源为占位文本（其中 3 条示警级已于 2026-11-16 修复为真实溯源）、321 条释义与机制重复；`thinking_frameworks.md` 有 180 条模板化批次。这些条目保留不删，但引用时优先选手写批次，不把模板句当证据。
+- 7 条争议科学条目（学习金字塔 / MBTI / 一万小时法则 / 自我损耗 / 斯坦福监狱实验 / 霍桑效应 / 莫扎特效应）带「证据状态」字段：非「稳健实证」档的条目不得作为论证唯一支柱，清单与判定规则见 `references/ontology.md` §四–§六。
+- `search` 内置中文变体同义词表（「五个为什么」命中 5Why 分析法、「针锋相对」命中以牙还牙），见 `scripts/lattice.py` 的 `SEARCH_SYNONYMS`。
 - `python3 scripts/lattice.py audit` 可复核上述全部基线。
 
 ## 版本简史
 
-v1.0（2026-05，501 条）→ v2.2（1969 条，九维度齐）→ v2.4（2026-11-02，三十六计体系 +6 条至 1975 条）→ v3.0（2026-11-05，检索式重构）→ v3.1（2026-11-13，恢复曾丢失的三十六计融合）→ v3.2（2026-11-13，恢复重构时误删的执行前守门清单与映射行）。完整历史见 `references/catalog.md` §版本历史。
+v1.0（2026-05，501 条）→ v2.2（1969 条，九维度齐）→ v2.4（2026-11-02，三十六计体系 +6 条至 1975 条）→ v3.0（2026-11-05，检索式重构）→ v3.1（2026-11-13，恢复曾丢失的三十六计融合）→ v3.2（2026-11-13，恢复重构时误删的执行前守门清单与映射行）→ v3.3（2026-11-16，本体复盘：新增领域本体层、补 10 条缺失条目至 1985、7 条争议条目补证据状态与真实溯源、检索同义词表）。完整历史见 `references/catalog.md` §版本历史。
 
 ## License
 
